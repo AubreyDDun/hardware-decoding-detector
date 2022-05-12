@@ -1,6 +1,6 @@
 {
   "name": "my-webpack-project",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "My webpack project",
   "main": "./dist/hevc-detector.js",
   "types": "./dist/hevc-detector.d.ts",
