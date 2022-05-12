@@ -1,4 +1,4 @@
-import { Result } from '../types';
+import { Result, DetectParams } from '../types';
 const USER_AGENT = navigator.userAgent;
 
 const IS_X5 = (/qqbrowser/i).test(USER_AGENT.toLowerCase());
@@ -9,10 +9,10 @@ const IS_SAFARI = (/Safari/i).test(USER_AGENT) && !IS_CHROME;
 const _safari = USER_AGENT.match(/Version\/([\d.]+)([^S](Safari)|[^M]*(Mobile)[^S]*(Safari))/);
 const safariVersion = _safari && _safari[1];
 
-const createVideo = (source: string): HTMLVideoElement => {
+const createVideo = (source: string, size = 100): HTMLVideoElement => {
   const video = document.createElement('video');
-  video.setAttribute('width', '100');
-  video.setAttribute('height', '100');
+  video.setAttribute('width', `${size}`);
+  video.setAttribute('height', `${size}`);
   video.setAttribute('muted', 'muted');
   video.setAttribute('crossorigin', 'anonymous');
   video.setAttribute('preload', 'preload');
@@ -25,7 +25,16 @@ const createVideo = (source: string): HTMLVideoElement => {
   return video;
 }
 
-const getResult = (source: string): Promise<boolean> => {
+const doShowVideo = (video: HTMLVideoElement, codecTag = '') => {
+  const block = document.createElement('dv');
+  const tag = document.createElement('h3');
+  tag.innerText = codecTag;
+  block.appendChild(video);
+  block.appendChild(tag);
+  document.body.appendChild(block);
+}
+
+const getResult = (source: string, showVideo = false, codecTag = ''): Promise<boolean> => {
   const startTime = performance.now();
   const maxDetectingTime = 2000;
 
@@ -36,7 +45,11 @@ const getResult = (source: string): Promise<boolean> => {
       if ((endTime - startTime > maxDetectingTime) || (video as HTMLVideoElement).videoWidth !== 0) {
         clearInterval(timer);
         const isSupported = (video as HTMLVideoElement).videoWidth !== 0;
-        video = null;
+        if (showVideo) {
+          doShowVideo(video as HTMLVideoElement, codecTag);
+        } else {
+          video = null;
+        }
         resolve(isSupported);
       }
     });
@@ -56,7 +69,16 @@ const convertUrl2blob = async (source: string) => {
  * @param {booealn} includeSystemHijack 包含系统劫持浏览器以发挥硬件解码的场景（比如安卓系统自带浏览器中的劫持现象） 
  * @returns {Promise<Result>} 
  */
-const detector = (includeSystemHijack = true): Promise<Result> => new Promise(async (resolve) => {
+const defaultParams = {
+  includeSystemHijack: true,
+  showVideo: false,
+};
+
+const detector = (params: DetectParams = defaultParams): Promise<Result> => new Promise(async (resolve) => {
+  const {
+    includeSystemHijack,
+    showVideo,
+  } = params;
   const startTime = performance.now();
 
   let hvc1Source: string = 'https://ice-pub-media.myalicdn.com/vod-demo/hevc/01s_20x20_hvc1.mp4';
@@ -70,15 +92,15 @@ const detector = (includeSystemHijack = true): Promise<Result> => new Promise(as
     if (!includeSystemHijack) {
       hvc1Source = await convertUrl2blob(hvc1Source);
     }
-    isHvc1Supported = await getResult(hvc1Source);
+    isHvc1Supported = await getResult(hvc1Source, showVideo, 'hvc1');
   } else {
     if (!includeSystemHijack) {
       hvc1Source = await convertUrl2blob(hvc1Source);
       hev1Source = await convertUrl2blob(hev1Source);
     }
     // 其他浏览器，对两种 tag 都进行探测
-    isHvc1Supported = await getResult(hvc1Source);
-    isHev1Supported = await getResult(hev1Source);
+    isHvc1Supported = await getResult(hvc1Source, showVideo, 'hvc1');
+    isHev1Supported = await getResult(hev1Source, showVideo, 'hev1');
   }
   const endTime = performance.now();
   resolve({
@@ -87,7 +109,5 @@ const detector = (includeSystemHijack = true): Promise<Result> => new Promise(as
     time: Math.ceil(endTime - startTime),
   });
 });
-
-window.hevcDetector = detector;
 
 export default detector;

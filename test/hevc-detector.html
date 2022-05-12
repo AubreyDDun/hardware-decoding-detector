@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>h.265 detector</title>
+</head>
+<body>
+  <h3>
+    isHev1Supported: <span id="hev1"></span>
+  </h3>
+  <h3>
+    isHvc1Supported: <span id="hvc1"></span>
+  </h3>
+  <h3>
+    time(ms): <span id="time"></span>
+  </h3>
+</body>
+<!-- <script src="https://cdn.jsdelivr.net/npm/hardware-decoding-detector@0.0.2/dist/hevc-detector.js"></script> -->
+<script>
+  !function(e,t){"object"==typeof exports&&"object"==typeof module?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.hevcDetector=t():e.hevcDetector=t()}(this,(()=>(()=>{var e={49:e=>{function t(e){var t=new Error("Cannot find module '"+e+"'");throw t.code="MODULE_NOT_FOUND",t}t.keys=()=>[],t.resolve=t,t.id=49,e.exports=t},312:function(e,t,n){var r,o,i,a=this&&this.__awaiter||function(e,t,n,r){return new(n||(n=Promise))((function(o,i){function a(e){try{u(r.next(e))}catch(e){i(e)}}function c(e){try{u(r.throw(e))}catch(e){i(e)}}function u(e){var t;e.done?o(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(a,c)}u((r=r.apply(e,t||[])).next())}))},c=this&&this.__generator||function(e,t){var n,r,o,i,a={label:0,sent:function(){if(1&o[0])throw o[1];return o[1]},trys:[],ops:[]};return i={next:c(0),throw:c(1),return:c(2)},"function"==typeof Symbol&&(i[Symbol.iterator]=function(){return this}),i;function c(i){return function(c){return function(i){if(n)throw new TypeError("Generator is already executing.");for(;a;)try{if(n=1,r&&(o=2&i[0]?r.return:i[0]?r.throw||((o=r.return)&&o.call(r),0):r.next)&&!(o=o.call(r,i[1])).done)return o;switch(r=0,o&&(i=[2&i[0],o.value]),i[0]){case 0:case 1:o=i;break;case 4:return a.label++,{value:i[1],done:!1};case 5:a.label++,r=i[1],i=[0];continue;case 7:i=a.ops.pop(),a.trys.pop();continue;default:if(!((o=(o=a.trys).length>0&&o[o.length-1])||6!==i[0]&&2!==i[0])){a=0;continue}if(3===i[0]&&(!o||i[1]>o[0]&&i[1]<o[3])){a.label=i[1];break}if(6===i[0]&&a.label<o[1]){a.label=o[1],o=i;break}if(o&&a.label<o[2]){a.label=o[2],a.ops.push(i);break}o[2]&&a.ops.pop(),a.trys.pop();continue}i=t.call(e,a)}catch(e){i=[6,e],r=0}finally{n=o=0}if(5&i[0])throw i[1];return{value:i[0]?i[1]:void 0,done:!0}}([i,c])}}};!function(a){if("object"==typeof e.exports){var c=a(n(49),t);void 0!==c&&(e.exports=c)}else o=[n,t],void 0===(i="function"==typeof(r=a)?r.apply(t,o):r)||(e.exports=i)}((function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=navigator.userAgent,r=/qqbrowser/i.test(n.toLowerCase()),o=/Edge/i.test(n),i=/Chrome/i.test(n)&&!o&&!r,u=/Safari/i.test(n)&&!i,s=n.match(/Version\/([\d.]+)([^S](Safari)|[^M]*(Mobile)[^S]*(Safari))/),l=s&&s[1],p=function(e,t,n){void 0===t&&(t=!1),void 0===n&&(n="");var r=performance.now();return new Promise((function(o){var i=function(e,t){void 0===t&&(t=100);var n=document.createElement("video");return n.setAttribute("width","".concat(t)),n.setAttribute("height","".concat(t)),n.setAttribute("muted","muted"),n.setAttribute("crossorigin","anonymous"),n.setAttribute("preload","preload"),n.setAttribute("autoplay","autoplay"),n.setAttribute("webkit-playsinline","webkit-playsinline"),n.setAttribute("playsinline","playsinline"),n.setAttribute("x-webkit-airplay","x-webkit-airplay"),n.setAttribute("playsinline","playsinline"),n.src=e,n}(e),a=setInterval((function(){if(performance.now()-r>2e3||0!==i.videoWidth){clearInterval(a);var e=0!==i.videoWidth;t?function(e,t){void 0===t&&(t="");var n=document.createElement("div"),r=document.createElement("h3");r.innerText=t,n.appendChild(e),n.appendChild(r),document.body.appendChild(n)}(i,n):i=null,o(e)}}))}))},d=l&&Number(l.split(".")[0]),f=function(e){return a(void 0,void 0,void 0,(function(){var t;return c(this,(function(n){switch(n.label){case 0:return[4,fetch(e)];case 1:return[4,n.sent().blob()];case 2:return t=n.sent(),[2,URL.createObjectURL(t)]}}))}))};t.default=function(e,t){return void 0===e&&(e=!0),void 0===t&&(t=!1),new Promise((function(n){return a(void 0,void 0,void 0,(function(){var r,o,i,a,s,l;return c(this,(function(c){switch(c.label){case 0:return r=performance.now(),o="https://ice-pub-media.myalicdn.com/vod-demo/hevc/01s_20x20_hvc1.mp4",i="https://ice-pub-media.myalicdn.com/vod-demo/hevc/01s_20x20_hev1.mp4",a=!1,s=!1,u&&d&&d>=11?e?[3,2]:[4,f(o)]:[3,4];case 1:o=c.sent(),c.label=2;case 2:return[4,p(o,t,"hvc1")];case 3:return a=c.sent(),[3,10];case 4:return e?[3,7]:[4,f(o)];case 5:return o=c.sent(),[4,f(i)];case 6:i=c.sent(),c.label=7;case 7:return[4,p(o,t,"hvc1")];case 8:return a=c.sent(),[4,p(i,t,"hev1")];case 9:s=c.sent(),c.label=10;case 10:return l=performance.now(),n({isHvc1Supported:a,isHev1Supported:s,time:Math.ceil(l-r)}),[2]}}))}))}))}}))}},t={};function n(r){var o=t[r];if(void 0!==o)return o.exports;var i=t[r]={exports:{}};return e[r].call(i.exports,i,i.exports,n),i.exports}n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t);var r=n(312);return r.default})()));
+</script>
+<script>
+  var hev1Node = document.querySelector('#hev1');
+  var hvc1Node = document.querySelector('#hvc1');
+  var time = document.querySelector('#time');
+  hevcDetector().then((result) => {
+    var isHvc1Supported = result.isHvc1Supported;
+    var isHev1Supported = result.isHev1Supported;
+
+    hev1Node.innerText = isHvc1Supported;
+    hvc1Node.innerText = isHev1Supported;
+    time.innerText = result.time;
+
+    if (!isHvc1Supported || !isHev1Supported) {
+      hevcDetector(true, true).then((result) => {});
+    }
+  });
+</script>
+</html>

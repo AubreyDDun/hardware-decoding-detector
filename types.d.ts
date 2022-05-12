@@ -4,8 +4,13 @@ export interface Result {
   time: number;
 }
 
+export interface DetectParams {
+  includeSystemHijack: boolean;
+  showVideo: boolean;
+}
+
 declare global {
   interface Window {
-    hevcDetector: any;
+    hevcDetector: (DetectParams) => Promise<Result>;
   }
 }

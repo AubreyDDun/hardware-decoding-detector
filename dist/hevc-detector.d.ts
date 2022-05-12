@@ -1,3 +1,3 @@
-import { Result } from '../types';
-declare const detector: (includeSystemHijack?: boolean) => Promise<Result>;
+import { Result, DetectParams } from '../types';
+declare const detector: (params?: DetectParams) => Promise<Result>;
 export default detector;
