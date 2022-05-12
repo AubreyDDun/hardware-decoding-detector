@@ -1,5 +1,5 @@
 {
-  "name": "my-webpack-project",
+  "name": "hardware-decoding-detector",
   "version": "0.0.3",
   "description": "My webpack project",
   "main": "./dist/hevc-detector.js",

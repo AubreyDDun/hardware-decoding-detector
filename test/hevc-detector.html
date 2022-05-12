@@ -29,7 +29,10 @@
       time.innerText = result.time;
   
       if (!isHvc1Supported || !isHev1Supported) {
-        hevcDetector(true, true).then((result) => {});
+        hevcDetector({
+          includeSystemHijack: true,
+          showVideo: true,
+        }).then((result) => {});
       }
     });
   </script>
