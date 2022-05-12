@@ -1,0 +1,1 @@
+module.exports = require('./dist/hevc-detector.js');

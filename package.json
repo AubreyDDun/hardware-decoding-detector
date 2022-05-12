@@ -1,0 +1,61 @@
+{
+  "name": "hardware-decoding-detector",
+  "version": "0.0.1",
+  "description": "A tool for detecting whether the browser can hardware decode a certain encoding format",
+  "main": "./dist/hevc-detector.js",
+  "types": "./dist/hevc-detector.d.ts",
+  "scripts": {
+    "clear": "rm -rf dist/",
+    "output": "cd lib && tsc --outDir ../dist",
+    "build": "npm run clear && npm run output",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.31",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "eslint": "^6.7.2",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.0.0",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "vue",
+      "@typescript-eslint"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint",
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "rules": {
+      "class-methods-use-this": "off",
+      "consistent-return": "off",
+      "linebreak-style": "off"
+    },
+    "ignorePatterns": "public"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AubreyDDun/hardware-decoding-detector.git"
+  },
+  "keywords": [
+    "hardware-decoding",
+    "detector",
+    "hevc",
+    "hvc1",
+    "hev1"
+  ],
+  "author": "AubreyDDun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AubreyDDun/hardware-decoding-detector/issues"
+  },
+  "homepage": "https://github.com/AubreyDDun/hardware-decoding-detector#readme"
+}
