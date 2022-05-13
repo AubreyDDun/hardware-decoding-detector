@@ -2,21 +2,17 @@
 const path = require("path");
 
 const config = {
-  entry: "./lib/hevc-detector.ts",
+  entry: path.resolve(__dirname, "./index.ts") ,
   output: {
     library: {
       name: 'hevcDetector',
       type: 'var',
       export: 'default',
     },
-    filename: 'hevc-detector.js',
+    filename: 'index.js',
     path: path.resolve(__dirname, "dist"),
     libraryTarget: 'umd',
     globalObject: 'this'
-  },
-  devServer: {
-    open: true,
-    host: "localhost",
   },
   module: {
     rules: [
@@ -28,7 +24,7 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: [".ts"],
   },
 };
 

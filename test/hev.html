@@ -1,0 +1,40 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hev1 detector</title>
+</head>
+<body>
+  <h1 style="z-index: 1;">
+    一个顶层元素
+  </h1>
+  <h3>
+    isHev1Supported: <span id="hev1"></span>
+  </h3>
+  <h3>
+    time(ms): <span id="time"></span>
+  </h3>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hardware-decoding-detector@0.0.4/dist/hevc-detector.js"></script>
+  <script>
+    var hev1Node = document.querySelector('#hev1');
+    var time = document.querySelector('#time');
+
+    hevcDetector({
+      codecTags: ['hev1']
+    }).then((result) => {
+      var isHev1Supported = result.isHev1Supported;
+  
+      hev1Node.innerText = isHev1Supported;
+      time.innerText = result.time;
+  
+      hevcDetector({
+        includeSystemHijack: true,
+        showVideo: true,
+        codecTags: ['hev1']
+      }).then((result) => {});
+    });
+    
+  </script>
+</body>
+</html>

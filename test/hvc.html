@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hvc1 detector</title>
+</head>
+<body>
+  <h1 style="z-index: 1;">
+    一个顶层元素
+  </h1>
+  <h3>
+    isHvc1Supported: <span id="hvc1"></span>
+  </h3>
+  <h3>
+    time(ms): <span id="time"></span>
+  </h3>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/hardware-decoding-detector@0.0.4/dist/hevc-detector.js"></script>
+  <script>
+    var hvc1Node = document.querySelector('#hvc1');
+    var time = document.querySelector('#time');
+
+    hevcDetector({
+      codecTags: ['hvc1']
+    }).then((result) => {
+      var isHvc1Supported = result.isHvc1Supported;
+      hvc1Node.innerText = isHvc1Supported;
+      time.innerText = result.time;
+  
+      hevcDetector({
+        includeSystemHijack: true,
+        showVideo: true,
+        codecTags: ['hvc1']
+      }).then((result) => {});
+    });
+    
+  </script>
+</body>
+</html>

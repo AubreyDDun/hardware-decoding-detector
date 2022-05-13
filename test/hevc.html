@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hevc</title>
+</head>
+<body>
+  
+  <h2>hev1</h2>
+  <video
+    width="200"
+    preload="auto"
+    autoplay
+    muted
+    controls
+    crossorigin="anonymous"
+    src="https://ks3-cn-beijing.ksyun.com/ksplayer/h265/mp4_resource/jinjie_265.mp4">
+  </video>
+
+  <h2>hvc1</h2>
+  <video
+    width="200"
+    preload="auto"
+    autoplay
+    muted
+    controls
+    crossorigin="anonymous"
+    src="https://gw.alicdn.com/bao/uploaded/LB1l2iXISzqK1RjSZFjXXblCFXa.mp4">
+  </video>
+</body>
+<script>
+  var ua = window.navigator.userAgent;
+  var text = document.createElement('p');
+  text.innerText = ua;
+  document.body.appendChild(text);
+</script>
+</html>

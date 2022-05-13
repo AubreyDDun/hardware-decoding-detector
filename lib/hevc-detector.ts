@@ -1,4 +1,3 @@
-import { Result, DetectParams } from '../types';
 const USER_AGENT = navigator.userAgent;
 
 const IS_X5 = (/qqbrowser/i).test(USER_AGENT.toLowerCase());
@@ -36,18 +35,20 @@ const doShowVideo = (video: HTMLVideoElement, codecTag = '') => {
 
 const getResult = (source: string, showVideo = false, codecTag = ''): Promise<boolean> => {
   const startTime = performance.now();
-  const maxDetectingTime = 2000;
+  const maxDetectingTime = showVideo ? 2000 : 2000;
 
   return new Promise((resolve) => {
-    let video: HTMLVideoElement | null = createVideo(source);
+    let video: HTMLVideoElement | null = createVideo(source, showVideo ? 100 : 0);
     const timer = setInterval(() => {
       const endTime = performance.now();
       if ((endTime - startTime > maxDetectingTime) || (video as HTMLVideoElement).videoWidth !== 0) {
         clearInterval(timer);
         const isSupported = (video as HTMLVideoElement).videoWidth !== 0;
         if (showVideo) {
+          (video as HTMLVideoElement).setAttribute('controls', 'controls');
           doShowVideo(video as HTMLVideoElement, codecTag);
         } else {
+          (video as HTMLVideoElement).pause();
           video = null;
         }
         resolve(isSupported);
@@ -76,10 +77,14 @@ const defaultParams = {
 
 const detector = (params: DetectParams = defaultParams): Promise<Result> => new Promise(async (resolve) => {
   const {
-    includeSystemHijack,
-    showVideo,
+    includeSystemHijack = true,
+    showVideo = false,
+    codecTags = ['hev1', 'hvc1']
   } = params;
   const startTime = performance.now();
+
+  const detectHvc1 = codecTags.indexOf('hvc1') > -1;
+  const detectHev1 = codecTags.indexOf('hev1') > -1;
 
   let hvc1Source: string = 'https://ice-pub-media.myalicdn.com/vod-demo/hevc/01s_20x20_hvc1.mp4';
   let hev1Source: string = 'https://ice-pub-media.myalicdn.com/vod-demo/hevc/01s_20x20_hev1.mp4';
@@ -94,13 +99,18 @@ const detector = (params: DetectParams = defaultParams): Promise<Result> => new 
     }
     isHvc1Supported = await getResult(hvc1Source, showVideo, 'hvc1');
   } else {
-    if (!includeSystemHijack) {
-      hvc1Source = await convertUrl2blob(hvc1Source);
-      hev1Source = await convertUrl2blob(hev1Source);
+    if (detectHvc1) {
+      if (!includeSystemHijack) {
+        hvc1Source = await convertUrl2blob(hvc1Source);
+      }
+      isHvc1Supported = await getResult(hvc1Source, showVideo, 'hvc1');
     }
-    // 其他浏览器，对两种 tag 都进行探测
-    isHvc1Supported = await getResult(hvc1Source, showVideo, 'hvc1');
-    isHev1Supported = await getResult(hev1Source, showVideo, 'hev1');
+    if (detectHev1) {
+      if (!includeSystemHijack) {
+        hev1Source = await convertUrl2blob(hev1Source);
+      }
+      isHev1Supported = await getResult(hev1Source, showVideo, 'hev1');
+    }
   }
   const endTime = performance.now();
   resolve({

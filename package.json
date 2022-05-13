@@ -1,9 +1,9 @@
 {
   "name": "hardware-decoding-detector",
-  "version": "0.0.3",
-  "description": "My webpack project",
-  "main": "./dist/hevc-detector.js",
-  "types": "./dist/hevc-detector.d.ts",
+  "version": "0.0.4",
+  "description": "A tool for detecting whether the browser can hardware decode a certain encoding format",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "clear": "rm -rf dist/",
     "output": "cd lib && tsc --outDir ../dist",
